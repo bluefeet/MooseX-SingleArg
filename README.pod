@@ -4,8 +4,6 @@ MooseX::SingleArg - No-fuss instantiation of Moose objects using a single argume
 
 =head1 SYNOPSIS
 
-Use this module in your class:
-
     package Person;
     use Moose;
     
@@ -14,9 +12,7 @@ Use this module in your class:
     single_arg 'name';
     
     has name => ( is=>'ro', isa=>'Str' );
-
-Then instantiate a new instance of your class with a single argument:
-
+    
     my $john = Person->new( 'John Doe' );
     print $john->name();
 
@@ -27,7 +23,7 @@ to be constructed with a single argument.  Your class must use this module and
 then use the single_arg method to declare which of the class's attributes will
 be assigned the single argument value.
 
-If the class is constructure using the typical argument list name/value pairs,
+If the class is constructed using the typical argument list name/value pairs,
 or with a hashref, then things work as is usual.  But, if the arguments are a
 single non-hashref value then that argument will be assigned to whatever
 attribute you have declared.
@@ -49,6 +45,25 @@ like the following be written:
 
 The above is complex boilerplate for a simple feature.  This module aims to make
 it simple and fool-proof to support single-argument Moose object construction.
+
+=head1 FORCING SINGLE ARG PROCESSING
+
+An optional force parameter may be specified:
+
+    single_arg name => (
+        force => 1,
+    );
+
+This causes constructor argument processing to only work in single-argument mode.  If
+more than one argument is passed then an error will be thrown.  The benefit of forcing
+single argument processing is that hashrefs may now be used as the value of the single
+argument when force is on.
+
+=head1 SEE ALSO
+
+L<MooseX::OneArgNew> solves the same problem that this module solves.  I considered using OneArgNew
+for my own needs, but found it oddly combersom and confusing.  Maybe thats just me, but I hope that
+this module's design is much simpler to comprehend and more natural to use.
 
 =head1 AUTHOR
 

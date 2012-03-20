@@ -8,8 +8,6 @@ MooseX::SingleArg - No-fuss instantiation of Moose objects using a single argume
 
 =head1 SYNOPSIS
 
-Use this module in your class:
-
     package Person;
     use Moose;
     
@@ -18,9 +16,7 @@ Use this module in your class:
     single_arg 'name';
     
     has name => ( is=>'ro', isa=>'Str' );
-
-Then instantiate a new instance of your class with a single argument:
-
+    
     my $john = Person->new( 'John Doe' );
     print $john->name();
 
@@ -31,7 +27,7 @@ to be constructed with a single argument.  Your class must use this module and
 then use the single_arg method to declare which of the class's attributes will
 be assigned the single argument value.
 
-If the class is constructure using the typical argument list name/value pairs,
+If the class is constructed using the typical argument list name/value pairs,
 or with a hashref, then things work as is usual.  But, if the arguments are a
 single non-hashref value then that argument will be assigned to whatever
 attribute you have declared.
@@ -54,6 +50,19 @@ like the following be written:
 The above is complex boilerplate for a simple feature.  This module aims to make
 it simple and fool-proof to support single-argument Moose object construction.
 
+=head1 FORCING SINGLE ARG PROCESSING
+
+An optional force parameter may be specified:
+
+    single_arg name => (
+        force => 1,
+    );
+
+This causes constructor argument processing to only work in single-argument mode.  If
+more than one argument is passed then an error will be thrown.  The benefit of forcing
+single argument processing is that hashrefs may now be used as the value of the single
+argument when force is on.
+
 =cut
 
 use Carp qw( croak );
@@ -63,10 +72,19 @@ Moose::Exporter->setup_import_methods(
 );
 
 sub single_arg {
-    my ($meta, $arg) = @_;
+    my ($meta, $arg, %params) = @_;
+
     my $class = $meta->name();
     croak "A single arg has already been declared for $class" if $class->_has_single_arg();
+
     $class->_single_arg( $arg );
+
+    foreach my $param (keys %params) {
+        my $method = '_' . $param . '_single_arg';
+        croak("Unknown single_arg parameter $param") if !$class->can($method);
+        $class->$method( $params{$param} );
+    }
+
     return;
 }
 
@@ -90,6 +108,7 @@ sub init_meta {
     package MooseX::SingleArg::Role;
     use Moose::Role;
 
+    use Carp qw( croak );
     use MooseX::ClassAttribute;
 
     class_has _single_arg => (
@@ -98,20 +117,37 @@ sub init_meta {
         predicate => '_has_single_arg',
     );
 
+    class_has _force_single_arg => (
+        is        => 'rw',
+        isa       => 'Bool',
+    );
+
     around BUILDARGS => sub{
         my $orig = shift;
-        my $self = shift;
+        my $class = shift;
 
-        if (@_==1 and ref($_[0]) ne 'HASH') {
-            return $self->$orig( $self->_single_arg() => $_[0] );
+        my $single_arg = $class->_single_arg();
+        croak("single_arg() has not been called for $class") if !$single_arg;
+
+        my $force = $class->_force_single_arg();
+        croak("$class accepts only one argument for $single_arg") if $force and @_>1;
+
+        if (@_==1 and ($force or ref($_[0]) ne 'HASH')) {
+            return $class->$orig( $single_arg => $_[0] );
         }
 
-        return $self->$orig( @_ );
+        return $class->$orig( @_ );
     };
 }
 
 1;
 __END__
+
+=head1 SEE ALSO
+
+L<MooseX::OneArgNew> solves the same problem that this module solves.  I considered using OneArgNew
+for my own needs, but found it oddly combersom and confusing.  Maybe thats just me, but I hope that
+this module's design is much simpler to comprehend and more natural to use.
 
 =head1 AUTHOR
 
