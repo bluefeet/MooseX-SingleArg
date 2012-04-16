@@ -22,10 +22,9 @@ MooseX::SingleArg - No-fuss instantiation of Moose objects using a single argume
 
 =head1 DESCRIPTION
 
-This module provides a role and declarative sugar for allowing Moose instances
-to be constructed with a single argument.  Your class must use this module and
-then use the single_arg method to declare which of the class's attributes will
-be assigned the single argument value.
+This module allows Moose instances to be constructed with a single argument.
+Your class or role must use this module and then use the single_arg method to
+declare which attribute will be assigned the single argument value.
 
 If the class is constructed using the typical argument list name/value pairs,
 or with a hashref, then things work as is usual.  But, if the arguments are a
@@ -68,76 +67,33 @@ argument when force is on.
 use Carp qw( croak );
 
 Moose::Exporter->setup_import_methods(
-    with_meta => [ 'single_arg' ],
+    with_meta => ['single_arg'],
+    class_metaroles => {
+        class => ['MooseX::SingleArg::Meta::Class'],
+    },
+    role_metaroles => {
+        role                 => ['MooseX::SingleArg::Meta::Role'],
+        application_to_class => ['MooseX::SingleArg::Meta::ToClass'],
+        application_to_role  => ['MooseX::SingleArg::Meta::ToRole'],
+    },
+    base_class_roles => ['MooseX::SingleArg::Meta::Object'],
 );
 
 sub single_arg {
-    my ($meta, $arg, %params) = @_;
+    my ($meta, $name, %args) = @_;
 
     my $class = $meta->name();
-    croak "A single arg has already been declared for $class" if $class->_has_single_arg();
+    croak "A single arg has already been declared for $class" if $meta->has_single_arg();
 
-    $class->_single_arg( $arg );
+    $meta->single_arg( $name );
 
-    foreach my $param (keys %params) {
-        my $method = '_' . $param . '_single_arg';
-        croak("Unknown single_arg parameter $param") if !$class->can($method);
-        $class->$method( $params{$param} );
+    foreach my $arg (keys %args) {
+        my $method = $arg . '_single_arg';
+        croak("Unknown single_arg argument $arg") if !$meta->can($method);
+        $meta->$method( $args{$arg} );
     }
 
     return;
-}
-
-sub init_meta {
-    shift;
-    my %args = @_;
-
-    Moose->init_meta( %args );
-
-    my $class = $args{for_class};
-
-    Moose::Util::MetaRole::apply_base_class_roles(
-        for_class => $class,
-        roles => [ 'MooseX::SingleArg::Role' ],
-    );
-
-    return $class->meta();
-}
-
-{
-    package MooseX::SingleArg::Role;
-    use Moose::Role;
-
-    use Carp qw( croak );
-    use MooseX::ClassAttribute;
-
-    class_has _single_arg => (
-        is        => 'rw',
-        isa       => 'Str',
-        predicate => '_has_single_arg',
-    );
-
-    class_has _force_single_arg => (
-        is        => 'rw',
-        isa       => 'Bool',
-    );
-
-    around BUILDARGS => sub{
-        my $orig = shift;
-        my $class = shift;
-
-        my $single_arg = $class->_single_arg();
-        croak("single_arg() has not been called for $class") if !$single_arg;
-
-        my $force = $class->_force_single_arg();
-        croak("$class accepts only one argument for $single_arg") if $force and @_>1;
-
-        if (@_==1 and ($force or ref($_[0]) ne 'HASH')) {
-            return $class->$orig( $single_arg => $_[0] );
-        }
-
-        return $class->$orig( @_ );
-    };
 }
 
 1;

@@ -55,6 +55,28 @@ require_ok('MooseX::SingleArg');
     is( $obj->arg2(), 789, '( 789 ) sets arg2 to 789' );
 }
 
+{
+    package MyRole;
+    use Moose::Role;
+    use MooseX::SingleArg;
+    single_arg 'blah';
+    has blah => (
+        is => 'ro',
+        isa => 'Str',
+    );
+}
+
+{
+    package MyClass2;
+    use Moose;
+    with 'MyRole';
+}
+
+{
+    my $obj = MyClass2->new( 55 );
+    is( $obj->blah(), 55, 'works with roles too' );
+}
+
 like(
     exception {
         package Broken;

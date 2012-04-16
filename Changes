@@ -1,6 +1,8 @@
 Revision history for Perl extension MooseX::SingleArg.
 
 {{$NEXT}}
+ - Use Moose's meta traits more effectively so that single args may be
+   declared in roles.
 
 0.03      2012-03-20
  - Comment on MooseX::OneArgNew.
