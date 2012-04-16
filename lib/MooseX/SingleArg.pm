@@ -23,7 +23,7 @@ MooseX::SingleArg - No-fuss instantiation of Moose objects using a single argume
 =head1 DESCRIPTION
 
 This module allows Moose instances to be constructed with a single argument.
-Your class or role must use this module and then use the single_arg method to
+Your class or role must use this module and then use the single_arg sugar to
 declare which attribute will be assigned the single argument value.
 
 If the class is constructed using the typical argument list name/value pairs,
