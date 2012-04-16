@@ -2,6 +2,8 @@ Revision history for Perl extension MooseX::SingleArg.
 
 {{$NEXT}}
  - Minor doc updates.
+ - As of 0.04 we are no longer using MooseX::ClassAttribute, so removing
+   it from the prereqs.
 
 0.04      2012-04-16
  - Use Moose's meta traits more effectively so that single args may be
