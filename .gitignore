@@ -1,2 +1,5 @@
-MooseX-SingleArg*
-.build
+/MooseX-SingleArg*
+/.build
+*.swp
+/nytprof*
+/cover_db
