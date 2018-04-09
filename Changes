@@ -2,6 +2,8 @@ Revision history for Perl extension MooseX::SingleArg.
 
 {{$NEXT}}
 
+0.05 2018-04-09
+
  - Minor doc updates.
  - As of 0.04 we are no longer using MooseX::ClassAttribute, so removing
    it from the prereqs.
