@@ -2,6 +2,8 @@ Revision history for Perl extension MooseX::SingleArg.
 
 {{$NEXT}}
 
+ - Document init_arg behavior.  Thanks @tobyink!
+
 0.06 2018-04-17
 
  - Add a cpanfile, doh!
