@@ -119,6 +119,20 @@ this module's design is much simpler to comprehend and more natural to use.
 
 Aran Clary Deltac <bluefeet@gmail.com>
 
+=head1 CONTRIBUTORS
+
+=over
+
+=item *
+
+Xavier Guimard <x.guimardE<64>free.fr>
+
+=item *
+
+Mohammad S Anwar <mohammad.anwarE<64>yahoo.com>
+
+=back
+
 =head1 LICENSE
 
 This is free software; you can redistribute it and/or modify it under

@@ -2,6 +2,8 @@ Revision history for Perl extension MooseX::SingleArg.
 
 {{$NEXT}}
 
+ - Fix minor typo in Pod.
+
 0.08 2018-05-16
 
  - Allow all the modules to be indexed.
