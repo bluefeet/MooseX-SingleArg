@@ -1,5 +1,4 @@
-package # Hide from the indexer.
-    MooseX::SingleArg::Meta::Object;
+package MooseX::SingleArg::Meta::Object;
 use Moose::Role;
 
 use Carp qw( croak );

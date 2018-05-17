@@ -2,6 +2,8 @@ Revision history for Perl extension MooseX::SingleArg.
 
 {{$NEXT}}
 
+ - Allow all the modules to be indexed.
+
 0.07 2018-04-28
 
  - Document init_arg behavior.  Thanks @tobyink!

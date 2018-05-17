@@ -1,5 +1,4 @@
-package # Hide from the indexer.
-    MooseX::SingleArg::Meta::Class;
+package MooseX::SingleArg::Meta::Class;
 use Moose::Role;
 
 has single_arg => (

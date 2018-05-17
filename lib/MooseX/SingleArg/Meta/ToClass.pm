@@ -1,5 +1,4 @@
-package # Hide from the indexer.
-    MooseX::SingleArg::Meta::ToClass;
+package MooseX::SingleArg::Meta::ToClass;
 use Moose::Role;
 
 around apply => sub {
