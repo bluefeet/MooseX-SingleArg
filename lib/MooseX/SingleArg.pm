@@ -1,6 +1,6 @@
 package MooseX::SingleArg;
-use Moose ();
-use Moose::Exporter;
+
+$MooseX::SingleArg::VERSION = '0.08';
 
 =head1 NAME
 
@@ -74,6 +74,8 @@ argument when force is on.
 
 =cut
 
+use Moose ();
+use Moose::Exporter;
 use Carp qw( croak );
 
 Moose::Exporter->setup_import_methods(

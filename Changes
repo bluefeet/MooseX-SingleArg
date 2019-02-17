@@ -1,8 +1,9 @@
-Revision history for Perl extension MooseX::SingleArg.
+Revision history for Perl extension MooseX-SingleArg.
 
 {{$NEXT}}
 
  - Fix minor typo in Pod.
+ - Migrate build tooling from Dist::Zilla to Minilla.
 
 0.08 2018-05-16
 
