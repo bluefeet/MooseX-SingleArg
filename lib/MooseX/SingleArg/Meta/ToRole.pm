@@ -1,4 +1,7 @@
 package MooseX::SingleArg::Meta::ToRole;
+
+$MooseX::SingleArg::Meta::ToRole::VERSION = '0.08';
+
 use Moose::Role;
 
 around apply => sub{
