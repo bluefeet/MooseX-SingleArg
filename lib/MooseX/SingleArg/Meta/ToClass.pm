@@ -1,6 +1,6 @@
 package MooseX::SingleArg::Meta::ToClass;
 
-$MooseX::SingleArg::Meta::ToClass::VERSION = '0.08';
+$MooseX::SingleArg::Meta::ToClass::VERSION = '0.09';
 
 use Moose::Role;
 
