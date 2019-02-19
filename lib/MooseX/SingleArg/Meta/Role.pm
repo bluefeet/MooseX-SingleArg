@@ -1,6 +1,6 @@
 package MooseX::SingleArg::Meta::Role;
 
-$MooseX::SingleArg::Meta::Role::VERSION = '0.09';
+our $VERSION = '0.09';
 
 use Moose::Role;
 

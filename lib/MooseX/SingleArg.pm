@@ -1,6 +1,6 @@
 package MooseX::SingleArg;
 
-$MooseX::SingleArg::VERSION = '0.09';
+our $VERSION = '0.09';
 
 =head1 NAME
 
