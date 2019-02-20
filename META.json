@@ -10,7 +10,7 @@
    ],
    "meta-spec" : {
       "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
-      "version" : "2"
+      "version" : 2
    },
    "name" : "MooseX-SingleArg",
    "no_index" : {
@@ -70,6 +70,6 @@
       "Mohammad S Anwar <mohammad.anwar@yahoo.com>",
       "Xavier Guimard <x.guimard@free.fr>"
    ],
-   "x_serialization_backend" : "JSON::PP version 2.27300",
+   "x_serialization_backend" : "JSON::PP version 2.97001",
    "x_static_install" : 1
 }

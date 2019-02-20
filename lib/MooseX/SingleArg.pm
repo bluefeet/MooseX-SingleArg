@@ -1,5 +1,5 @@
 package MooseX::SingleArg;
-
+use 5.008001;
 our $VERSION = '0.09';
 
 =head1 NAME
